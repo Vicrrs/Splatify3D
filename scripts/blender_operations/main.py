@@ -60,6 +60,13 @@ def cortar_objeto(nome_do_objeto, posicao_z_cortador, escala_x_cortador, escala_
     bpy.context.view_layer.objects.active = objeto_a_cortar
     bpy.ops.object.modifier_apply(modifier="Corte")
     bpy.data.objects.remove(cortador)
+
+    # Seleciona todo o objeto e preenche buracos resultantes do corte
+    bpy.ops.object.mode_set(mode='EDIT')
+    bpy.ops.mesh.select_all(action='SELECT')
+    bpy.ops.mesh.fill_holes(sides=0)  # Define 0 para preencher todos os buracos
+    bpy.ops.object.mode_set(mode='OBJECT')
+
     
 def suavizar_superficie(nome_do_objeto, niveis_de_subdivisao, intensidade_suavizacao):
     obj = bpy.data.objects[nome_do_objeto]
